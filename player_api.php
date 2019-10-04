@@ -28,10 +28,10 @@ if (isset($_GET['action'])) {
         $res = $fn->getCategories($username, $password, "movie");
         echo json_encode($res);
     } else if ($action == "get_vod_info") {
-        $void_id = $_GET["void_id"];
+        $vod_id = $_GET["vod_id"];
         $movie_info = $fn->getMovieInfo($username, $password, $vod_id);
         $response ["info"] = $movie_info;
-        $response ["movie_data"] = $fn->getMovieData($void_id);
+        $response ["movie_data"] = $fn->getMovieData($vod_id);
        
         echo json_encode($response);
         

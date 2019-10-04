@@ -276,7 +276,7 @@ class Functions {
                         "name" => $result->stream_display_name,
                         "stream_type" => "movie",
                         "stream_id" => (int) $result->id,
-                        "stream_icon" => $result->stream_icon,
+                        "stream_icon" => $this->getMovieImage($result->id),
                         "rating" => "",
                         "rating_5based" => 0,
                         "added" => $result->added,
@@ -302,19 +302,17 @@ class Functions {
      * @param type $void_id
      * @return string
      */
-    public function getMovieInfo($username, $password, $void_id) {
+    public function getMovieInfo($username, $password, $vod_id) {
         if ($this->validateUser($username, $password)) {
             $info = "";
 
-            $sql = "SELECT movie_propeties as info "
-                    . "FROM streams "
-                    . "WHERE id='$void_id'";
+            $sql = "SELECT id, movie_propeties FROM streams WHERE id='$vod_id'";
 
             $query = $this->conn->prepare($sql);
             $query->execute();
             $results = $query->fetch(PDO::FETCH_OBJ);
 
-            $obj = json_decode($results->info, true);
+            $obj = json_decode($results->movie_propeties);
 
             $movie_info = array(
                 "movie_image" => $obj->{'movie_image'},
@@ -334,6 +332,24 @@ class Functions {
         } else {
             return "Movie info not available";
         }
+    }
+    
+    /**
+     * 
+     * @param type $vod_id
+     * @return type
+     */
+    public function getMovieImage($vod_id) {
+       
+            $info = "";
+            $sql = "SELECT id, movie_propeties FROM streams WHERE id='$vod_id'";
+            $query = $this->conn->prepare($sql);
+            $query->execute();
+            $results = $query->fetch(PDO::FETCH_OBJ);
+
+            $obj = json_decode($results->movie_propeties);
+            return $obj->{'movie_image'};
+        
     }
 
     /**
