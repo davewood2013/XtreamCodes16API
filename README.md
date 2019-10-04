@@ -15,7 +15,7 @@ Xtream Codes 1.6 API
 ````vi /home/xtreamcodes/iptv_xtream_codes/wwwdir/xc_config.php````
 
 
-## Replace only xxxx
+## Replace Database username and pssword (Replace only xxxx)
 
 ````private $username = "xxxx";````
 
